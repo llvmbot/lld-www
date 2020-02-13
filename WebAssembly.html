@@ -5,23 +5,16 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>WebAssembly lld port &#8212; lld 11 documentation</title>
     <link rel="stylesheet" href="_static/llvm.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '11',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -32,8 +25,7 @@
   table.right td { border: 1px solid #ccc; }
 </style>
 
-  </head>
-  <body>
+  </head><body>
 <div class="logo">
 <a href="index.html"><img src="_static/logo.png" alt="LLVM Documentation"/></a>
 </div>
@@ -57,7 +49,7 @@
 
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">WebAssembly lld port</a><ul>
 <li><a class="reference internal" href="#object-file-format">Object file format</a></li>
@@ -89,12 +81,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -116,7 +110,7 @@ possible the command line flags and the semantics should be the same.</p>
 <p>The WebAssembly object file format used by LLVM and LLD is specified as part of
 the WebAssembly tool conventions on <a class="reference external" href="https://github.com/WebAssembly/tool-conventions/blob/master/Linking.md">linking</a>.</p>
 <p>This is the object format that the llvm will produce when run with the
-<code class="docutils literal"><span class="pre">wasm32-unknown-unknown</span></code> target.</p>
+<code class="docutils literal notranslate"><span class="pre">wasm32-unknown-unknown</span></code> target.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -126,7 +120,7 @@ WebAssembly-specific options:</p>
 <dl class="option">
 <dt id="cmdoption-no-entry">
 <code class="descname">--no-entry</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-no-entry" title="Permalink to this definition">¶</a></dt>
-<dd><p>Don’t search for the entry point symbol (by default <code class="docutils literal"><span class="pre">_start</span></code>).</p>
+<dd><p>Don’t search for the entry point symbol (by default <code class="docutils literal notranslate"><span class="pre">_start</span></code>).</p>
 </dd></dl>
 
 <dl class="option">
@@ -227,34 +221,34 @@ one compilation unit which calls a function defined in another compilation
 unit but with too many arguments.</p>
 <p>In order not to generate such invalid modules, lld has two modes of handling such
 mismatches: it can simply error-out or it can create stub functions that will
-trap at runtime (functions that contain only an <code class="docutils literal"><span class="pre">unreachable</span></code> instruction)
+trap at runtime (functions that contain only an <code class="docutils literal notranslate"><span class="pre">unreachable</span></code> instruction)
 and use these stub functions at the otherwise invalid call sites.</p>
 <p>The default behaviour is to generate these stub function and to produce
-a warning.  The <code class="docutils literal"><span class="pre">--fatal-warnings</span></code> flag can be used to disable this behaviour
+a warning.  The <code class="docutils literal notranslate"><span class="pre">--fatal-warnings</span></code> flag can be used to disable this behaviour
 and error out if mismatched are found.</p>
 </div>
 <div class="section" id="imports-and-exports">
 <h3>Imports and Exports<a class="headerlink" href="#imports-and-exports" title="Permalink to this headline">¶</a></h3>
-<p>When building a shared library any symbols marked as <code class="docutils literal"><span class="pre">visibility=default</span></code> will
+<p>When building a shared library any symbols marked as <code class="docutils literal notranslate"><span class="pre">visibility=default</span></code> will
 be exported.</p>
-<p>When building an executable, only the entry point (<code class="docutils literal"><span class="pre">_start</span></code>) and symbols with
-the <code class="docutils literal"><span class="pre">WASM_SYMBOL_EXPORTED</span></code> flag are exported by default.  In LLVM the
-<code class="docutils literal"><span class="pre">WASM_SYMBOL_EXPORTED</span></code> flag is set by the <code class="docutils literal"><span class="pre">wasm-export-name</span></code> attribute which
-in turn can be set using <code class="docutils literal"><span class="pre">__attribute__((export_name))</span></code> clang attribute.</p>
+<p>When building an executable, only the entry point (<code class="docutils literal notranslate"><span class="pre">_start</span></code>) and symbols with
+the <code class="docutils literal notranslate"><span class="pre">WASM_SYMBOL_EXPORTED</span></code> flag are exported by default.  In LLVM the
+<code class="docutils literal notranslate"><span class="pre">WASM_SYMBOL_EXPORTED</span></code> flag is set by the <code class="docutils literal notranslate"><span class="pre">wasm-export-name</span></code> attribute which
+in turn can be set using <code class="docutils literal notranslate"><span class="pre">__attribute__((export_name))</span></code> clang attribute.</p>
 <p>In addition, symbols can be exported via the linker command line using
-<code class="docutils literal"><span class="pre">--export</span></code>.</p>
-<p>Finally, just like with native ELF linker the <code class="docutils literal"><span class="pre">--export-dynamic</span></code> flag can be
+<code class="docutils literal notranslate"><span class="pre">--export</span></code>.</p>
+<p>Finally, just like with native ELF linker the <code class="docutils literal notranslate"><span class="pre">--export-dynamic</span></code> flag can be
 used to export symbols in the executable which are marked as
-<code class="docutils literal"><span class="pre">visibility=default</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">visibility=default</span></code>.</p>
 </div>
 <div class="section" id="garbage-collection">
 <h3>Garbage Collection<a class="headerlink" href="#garbage-collection" title="Permalink to this headline">¶</a></h3>
 <p>Since WebAssembly is designed with size in mind the linker defaults to
-<code class="docutils literal"><span class="pre">--gc-sections</span></code> which means that all unused functions and data segments will
+<code class="docutils literal notranslate"><span class="pre">--gc-sections</span></code> which means that all unused functions and data segments will
 be stripped from the binary.</p>
 <p>The symbols which are preserved by default are:</p>
 <ul class="simple">
-<li>The entry point (by default <code class="docutils literal"><span class="pre">_start</span></code>).</li>
+<li>The entry point (by default <code class="docutils literal notranslate"><span class="pre">_start</span></code>).</li>
 <li>Any symbol which is to be exported.</li>
 <li>Any symbol transitively referenced by the above.</li>
 </ul>
@@ -264,17 +258,17 @@ be stripped from the binary.</p>
 <p>On native platforms, calls to weak undefined functions end up as calls to the
 null function pointer.  With WebAssembly, direct calls must reference a defined
 function (with the correct signature).  In order to handle this case the linker
-will generate function a stub containing only the <code class="docutils literal"><span class="pre">unreachable</span></code> instruction
+will generate function a stub containing only the <code class="docutils literal notranslate"><span class="pre">unreachable</span></code> instruction
 and use this for any direct references to an undefined weak function.</p>
-<p>For example a runtime call to a weak undefined function <code class="docutils literal"><span class="pre">foo</span></code> will up trapping
-on <code class="docutils literal"><span class="pre">unreachable</span></code> inside and linker-generated function called
-<code class="docutils literal"><span class="pre">undefined:foo</span></code>.</p>
+<p>For example a runtime call to a weak undefined function <code class="docutils literal notranslate"><span class="pre">foo</span></code> will up trapping
+on <code class="docutils literal notranslate"><span class="pre">unreachable</span></code> inside and linker-generated function called
+<code class="docutils literal notranslate"><span class="pre">undefined:foo</span></code>.</p>
 </div>
 </div>
 <div class="section" id="missing-features">
 <h2>Missing features<a class="headerlink" href="#missing-features" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Merging of data section similar to <code class="docutils literal"><span class="pre">SHF_MERGE</span></code> in the ELF world is not
+<li>Merging of data section similar to <code class="docutils literal notranslate"><span class="pre">SHF_MERGE</span></code> in the ELF world is not
 supported.</li>
 <li>No support for creating shared libraries.  The spec for shared libraries in
 WebAssembly is still in flux:
@@ -308,7 +302,7 @@ WebAssembly is still in flux:
     <div class="footer" role="contentinfo">
         &#169; Copyright 2011-2020, LLVM Project.
       Last updated on 2020-02-13.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

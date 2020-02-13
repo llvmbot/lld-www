@@ -10,9 +10,11 @@
     <title>LLD - The LLVM Linker &#8212; lld 11 documentation</title>
     <link rel="stylesheet" href="_static/llvm.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -22,8 +24,7 @@
   table.right td { border: 1px solid #ccc; }
 </style>
 
-  </head>
-  <body>
+  </head><body>
 <div class="logo">
 <a href="#"><img src="_static/logo.png" alt="LLVM Documentation"/></a>
 </div>
@@ -44,7 +45,7 @@
 
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
+  <h3><a href="#">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">LLD - The LLVM Linker</a><ul>
 <li><a class="reference internal" href="#features">Features</a></li>
@@ -72,12 +73,14 @@
   LLVM <a href="https://bugs.llvm.org/">Bugzilla</a>.</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -132,7 +135,7 @@ easy to use our linker as part of a cross-compile toolchain.</p>
 external linkers. All you have to do is to construct object files
 and command line arguments just like you would do to invoke an
 external linker and then call the linker’s main function,
-<code class="docutils literal"><span class="pre">lld::elf::link</span></code>, from your code.</p>
+<code class="docutils literal notranslate"><span class="pre">lld::elf::link</span></code>, from your code.</p>
 </li>
 <li><p class="first">It is small. We are using LLVM libObject library to read from object
 files, so it is not a completely fair comparison, but as of February
@@ -140,7 +143,7 @@ files, so it is not a completely fair comparison, but as of February
 consists of 198k lines of C++ code.</p>
 </li>
 <li><p class="first">Link-time optimization (LTO) is supported by default. Essentially,
-all you have to do to do LTO is to pass the <code class="docutils literal"><span class="pre">-flto</span></code> option to clang.
+all you have to do to do LTO is to pass the <code class="docutils literal notranslate"><span class="pre">-flto</span></code> option to clang.
 Then clang creates object files not in the native object file format
 but in LLVM bitcode format. LLD reads bitcode object files, compile
 them using LLVM and emit an output file. Because in this way LLD can
@@ -158,7 +161,7 @@ non-executable by default to tighten security.</p>
 <p>This is a link time comparison on a 2-socket 20-core 40-thread Xeon
 E5-2680 2.80 GHz machine with an SSD drive. We ran gold and lld with
 or without multi-threading support. To disable multi-threading, we
-added <code class="docutils literal"><span class="pre">-no-threads</span></code> to the command lines.</p>
+added <code class="docutils literal notranslate"><span class="pre">-no-threads</span></code> to the command lines.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="12%" />
@@ -219,8 +222,8 @@ disk latency/throughput, your results may vary.</p>
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Since GNU ld doesn’t support the <code class="docutils literal"><span class="pre">-icf=all</span></code> and
-<code class="docutils literal"><span class="pre">-gdb-index</span></code> options, we removed them from the command line
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Since GNU ld doesn’t support the <code class="docutils literal notranslate"><span class="pre">-icf=all</span></code> and
+<code class="docutils literal notranslate"><span class="pre">-gdb-index</span></code> options, we removed them from the command line
 for GNU ld. GNU ld would have been slower than this if it had
 these options.</td></tr>
 </tbody>
@@ -229,12 +232,12 @@ these options.</td></tr>
 <div class="section" id="build">
 <h2>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h2>
 <p>If you have already checked out LLVM using SVN, you can check out LLD
-under <code class="docutils literal"><span class="pre">tools</span></code> directory just like you probably did for clang. For the
+under <code class="docutils literal notranslate"><span class="pre">tools</span></code> directory just like you probably did for clang. For the
 details, see <a class="reference external" href="http://llvm.org/docs/GettingStarted.html">Getting Started with the LLVM System</a>.</p>
 <p>If you haven’t checked out LLVM, the easiest way to build LLD is to
 check out the entire LLVM projects/sub-projects from a git mirror and
 build that tree. You need <cite>cmake</cite> and of course a C++ compiler.</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/llvm/llvm-project llvm-project
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/llvm/llvm-project llvm-project
 <span class="gp">$</span> mkdir build
 <span class="gp">$</span> <span class="nb">cd</span> build
 <span class="gp">$</span> cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DLLVM_ENABLE_PROJECTS<span class="o">=</span>lld -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr/local ../llvm-project/llvm
@@ -244,20 +247,20 @@ build that tree. You need <cite>cmake</cite> and of course a C++ compiler.</p>
 </div>
 <div class="section" id="using-lld">
 <h2>Using LLD<a class="headerlink" href="#using-lld" title="Permalink to this headline">¶</a></h2>
-<p>LLD is installed as <code class="docutils literal"><span class="pre">ld.lld</span></code>. On Unix, linkers are invoked by
+<p>LLD is installed as <code class="docutils literal notranslate"><span class="pre">ld.lld</span></code>. On Unix, linkers are invoked by
 compiler drivers, so you are not expected to use that command
 directly. There are a few ways to tell compiler drivers to use ld.lld
 instead of the default linker.</p>
 <p>The easiest way to do that is to overwrite the default linker. After
 installing LLD to somewhere on your disk, you can create a symbolic
-link by doing <code class="docutils literal"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">/path/to/ld.lld</span> <span class="pre">/usr/bin/ld</span></code> so that
-<code class="docutils literal"><span class="pre">/usr/bin/ld</span></code> is resolved to LLD.</p>
+link by doing <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">/path/to/ld.lld</span> <span class="pre">/usr/bin/ld</span></code> so that
+<code class="docutils literal notranslate"><span class="pre">/usr/bin/ld</span></code> is resolved to LLD.</p>
 <p>If you don’t want to change the system setting, you can use clang’s
-<code class="docutils literal"><span class="pre">-fuse-ld</span></code> option. In this way, you want to set <code class="docutils literal"><span class="pre">-fuse-ld=lld</span></code> to
+<code class="docutils literal notranslate"><span class="pre">-fuse-ld</span></code> option. In this way, you want to set <code class="docutils literal notranslate"><span class="pre">-fuse-ld=lld</span></code> to
 LDFLAGS when building your programs.</p>
-<p>LLD leaves its name and version number to a <code class="docutils literal"><span class="pre">.comment</span></code> section in an
+<p>LLD leaves its name and version number to a <code class="docutils literal notranslate"><span class="pre">.comment</span></code> section in an
 output. If you are in doubt whether you are successfully using LLD or
-not, run <code class="docutils literal"><span class="pre">readelf</span> <span class="pre">--string-dump</span> <span class="pre">.comment</span> <span class="pre">&lt;output-file&gt;</span></code> and examine the
+not, run <code class="docutils literal notranslate"><span class="pre">readelf</span> <span class="pre">--string-dump</span> <span class="pre">.comment</span> <span class="pre">&lt;output-file&gt;</span></code> and examine the
 output. If the string “Linker: LLD” is included in the output, you are
 using LLD.</p>
 </div>
@@ -322,7 +325,7 @@ document soon.</p>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2011-2020, LLVM Project.
       Last updated on 2020-02-13.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>
